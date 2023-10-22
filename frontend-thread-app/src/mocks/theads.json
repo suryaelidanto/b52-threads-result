@@ -22,5 +22,17 @@
     "likes_count": 10,
     "replies_count": 5,
     "is_liked": true
+  },
+  {
+    "id": 3,
+    "author_picture": "https://img.freepik.com/free-photo/happy-young-asian-teen-woman-standing-with-her-finger-pointing-isolated-pink-background_74952-2445.jpg?w=996&t=st=1697992797~exp=1697993397~hmac=f1423b5ed8d776a6123e6139ed7639785abf82cce9f8f42d7e6baa6d59625837",
+    "author_name": "Ayu miswari",
+    "author_username": "@ayum123",
+    "posted_at": "4h",
+    "content": "Salfok sama orang bisa ngethread",
+    "image": "https://img.freepik.com/free-photo/superhero-shouting-by-megaphone_1368-8467.jpg?w=740&t=st=1697993596~exp=1697994196~hmac=ed6d86703787f9f973dfd23cc043b0e3fa3dafd668b8122d6e1b05a35bd67be5",
+    "likes_count": 10,
+    "replies_count": 5,
+    "is_liked": true
   }
 ]
