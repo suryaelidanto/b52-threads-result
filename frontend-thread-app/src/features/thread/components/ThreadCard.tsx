@@ -1,17 +1,23 @@
 import { Box, Image, Text, Button } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
 
-type ThreadCard = {
-  id: number;
-  author_picture: string;
-  author_name: string;
-  author_username: string;
-  posted_at: string;
-  content: string;
-  image: string;
-  likes_count: number;
-  replies_count: number;
-  isLike: boolean
+export type ThreadCard = {
+  id?: number,
+  user: User,
+  posted_at?: string;
+  content?: string;
+  image?: string;
+  likes_count?: number;
+  replies_count?: number;
+  is_liked: boolean;
+}
+
+interface User {
+  id?: number,
+  full_name?: string,
+  username?: string,
+  email?: string,
+  profile_picture?: string,
 }
 
 export function ThreadCard(props: ThreadCard) {
@@ -28,7 +34,7 @@ export function ThreadCard(props: ThreadCard) {
         color={"white"}
       >
         <Image
-          src={props.author_picture}
+          src={props.user?.profile_picture}
           width={"50px"}
           height={"50px"}
           objectFit={"cover"}
@@ -37,8 +43,8 @@ export function ThreadCard(props: ThreadCard) {
         />
         <Box>
           <Box display={"flex"}>
-            <Text>{props.author_name}</Text>
-            <Text ms={2} color="grey">{props.author_username}</Text>
+            <Text>{props.user?.full_name}</Text>
+            <Text ms={2} color="grey">@{props.user?.username}</Text>
             <Text ms={2} color="grey">{props.posted_at}</Text>
           </Box>
           <Text>{props.content}</Text>
@@ -51,7 +57,7 @@ export function ThreadCard(props: ThreadCard) {
             marginRight={"20px"}
           />
           <Box display={"flex"} gap={2} marginTop={"10px"}>
-            <Button backgroundColor={props.isLike ? "red" : "grey"}>
+            <Button backgroundColor={props?.is_liked ? "red" : "grey"}>
               {props.likes_count}
             </Button>
             <Button onClick={() => navigate(`/detail-posted/${props.id}`)}>{props.replies_count} Replies</Button>

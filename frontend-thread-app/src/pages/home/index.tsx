@@ -1,12 +1,24 @@
-import { Box } from '@chakra-ui/react'
+import { useEffect, useState } from 'react';
+import { Box } from '@chakra-ui/react';
 import { ThreadCard } from '@/features/thread';
-import { Footer, MyProfile, Navbar } from "@/components";
-import SuggestedFollow from '@/components/SuggestedFollow';
+import { Footer, MyProfile, Navbar, SuggestedFollow } from "@/components";
 import FormThread from '@/features/thread/components/FormThread';
-import Dummy from '@/mocks/theads.json';
+import { API } from '@/lib/api';
 
 export function Home() {
-  console.log(Dummy);
+  const [threads, setThreads] = useState<ThreadCard[]>()
+
+  async function getThreads() {
+    const response = await API.get('/threads')
+    setThreads(response?.data)
+  }
+
+  useEffect(() => {
+    getThreads()
+  }, [])  
+
+  console.log(threads);
+  
   
   return (
     <Box display={"flex"} justifyContent={"center"}>
@@ -27,22 +39,22 @@ export function Home() {
         flexDirection={"column"}
         padding={"10px"}
       >
-        <FormThread />
+        <FormThread 
+          getThreads={getThreads}
+        />
+
         <Box>
-        {Dummy.map((item) => {
+        {threads?.map((item) => {
             return (
-              <Box>
+              <Box key={item.id}>
                 <ThreadCard
-                  id={item.id}
+                  user={item.user}
                   content={item.content}
                   likes_count={item.likes_count}
                   posted_at={item.posted_at}
                   replies_count={item.replies_count}
                   image={item.image}
-                  author_name={item.author_name}
-                  author_username={item.author_username}
-                  author_picture={item.author_picture}
-                  isLike={item.is_liked}
+                  is_liked={item.is_liked}
                 />
               </Box>
             );

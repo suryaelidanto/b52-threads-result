@@ -1,13 +1,12 @@
 import { Box } from '@chakra-ui/react'
-import { ThreadCard } from '@/features/thread';
-import { useParams } from 'react-router-dom';
-import { Footer, MyProfile, Navbar } from "@/components";
-import SuggestedFollow from '@/components/SuggestedFollow';
-import Dummy from '@/mocks/theads.json';
+// import { ThreadCard } from '@/features/thread';
+// import { useParams } from 'react-router-dom';
+import { Footer, MyProfile, Navbar, SuggestedFollow } from "@/components";
+// import Dummy from '@/mocks/theads.json';
 
 export function PostDetail() {
-  const { id } = useParams()
-  const threadFilter = Dummy.filter(item => item.id === Number(id));
+  // const { id } = useParams()
+  // const threadFilter = Dummy.filter(item => item.id === Number(id));
   
   return (
     <Box display={"flex"} justifyContent={"center"}>
@@ -28,7 +27,7 @@ export function PostDetail() {
         flexDirection={"column"}
         padding={"10px"}
       >
-        {threadFilter.map((item) => {
+        {/* {threadFilter.map((item) => {
           return (
             <ThreadCard
               id={item.id}
@@ -37,13 +36,13 @@ export function PostDetail() {
               posted_at={item.posted_at}
               replies_count={item.replies_count}
               image={item.image}
-              author_name={item.author_name}
+              full_name={item.author_name}
               author_username={item.author_username}
               author_picture={item.author_picture}
               isLike={item.is_liked}
             />
           );
-        })}
+        })} */}
       </Box>
 
       <Box
