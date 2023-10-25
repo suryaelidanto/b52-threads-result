@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { Home, PostDetail } from "./pages";
+// import { Home, PostDetail } from "./pages";
+import { Home } from "./pages";
+import Main from "./layouts/Main";
 
 const theme = extendTheme({
   styles: {
@@ -21,7 +23,12 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="detail-posted/:id" element={<PostDetail />} />
+          <Route path="/home" element={
+            <Main>
+              <Home />
+            </Main>
+          } />
+          {/* <Route path="detail-posted/:id" element={<PostDetail />} /> */}
         </Routes>
       </Router>
     </ChakraProvider>

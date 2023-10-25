@@ -19,10 +19,10 @@ export class User {
   password: string;
 
   @Column({ nullable: true })
-  profile_picture: string;
+  picture: string;
 
   @Column({ nullable: true })
-  profile_description: string;
+  description: string;
 
   @OneToMany(() => Thread, (thread) => thread.user, {
     onUpdate: "CASCADE",

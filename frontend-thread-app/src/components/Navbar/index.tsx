@@ -4,29 +4,28 @@ import { AiFillHome, AiOutlineSearch, AiOutlineHeart, AiOutlineUser } from "reac
 export function Navbar() {
   return (
     <>
-      <Box width={"100%"} display={"flex"} flexDirection={"column"} gap={2}>
         <Text fontWeight={"bold"} fontSize={"50px"} color={"green"}>
           Circle
         </Text>
 
         <Button justifyContent={"flex-start"} variant='ghost' color={"white"}>
           <AiFillHome />
-          <Text> Home</Text>
+          <Text marginLeft={"10px"}> Home</Text>
         </Button>
         
         <Button justifyContent={"flex-start"} variant='ghost' color={"white"}>
           <AiOutlineSearch />
-          <Text> Search</Text>
+          <Text marginLeft={"10px"}> Search</Text>
         </Button>
 
         <Button justifyContent={"flex-start"} variant='ghost' color={"white"}>
           <AiOutlineHeart />
-          <Text> Follow</Text>
+          <Text marginLeft={"10px"}> Follow</Text>
         </Button>
 
         <Button justifyContent={"flex-start"} variant='ghost' color={"white"}>
           <AiOutlineUser />
-          <Text> Profile</Text>
+          <Text marginLeft={"10px"}> Profile</Text>
         </Button>
 
         <Button
@@ -38,7 +37,6 @@ export function Navbar() {
         >
           Create Post
         </Button>
-      </Box>
     </>
   )
 }
