@@ -34,7 +34,7 @@ export function ThreadCard(props: ThreadCard) {
         color={"white"}
       >
         <Image
-          src={props.user?.profile_picture}
+          src={props.user?.profile_picture ? props.user?.profile_picture : "https://i.pinimg.com/564x/bc/c6/e1/bcc6e12a3bef4190e0f8f1a14885c321.jpg"}
           width={"50px"}
           height={"50px"}
           objectFit={"cover"}

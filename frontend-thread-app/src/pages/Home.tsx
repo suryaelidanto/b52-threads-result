@@ -3,7 +3,7 @@ import { ThreadCard } from '@/features/thread';
 import FormThread from '@/features/thread/components/FormThread';
 import { useThreads } from '@/features/thread/hooks/useThreads';
 
-export function Home() {
+export default function Home() {
   const { getThreads } = useThreads()
 
   return (
