@@ -2,6 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { ThreadCard } from '@/features/thread';
 import FormThread from '@/features/thread/components/FormThread';
 import { useThreads } from '@/features/thread/hooks/useThreads';
+import { IThreadCard } from '@/types/Thread';
 
 export default function Home() {
   const { getThreads } = useThreads()
@@ -21,7 +22,7 @@ export default function Home() {
         <FormThread />
 
         <Box>
-        { getThreads?.map((item: any) => {
+          {getThreads?.map((item: IThreadCard) => {
             return (
               <Box key={item.id}>
                 <ThreadCard

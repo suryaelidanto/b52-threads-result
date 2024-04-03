@@ -26,7 +26,6 @@ export function useLogin() {
     try {
       const response = await API.post('/auth/login', form)
       dispatch(AUTH_LOGIN(response.data))
-        // console.log("login berhasil", response.data.token)
       navigate('/')
     } catch (err) {
       console.log(err)

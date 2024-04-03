@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Thread } from "../entities/Threads";
-import { createThreadSchema, updateThreadSchema } from "../utils/validators/Thread";
+import {
+  createThreadSchema,
+  updateThreadSchema,
+} from "../utils/validators/Thread";
+import { v2 as cloudinary } from "cloudinary";
 
 class ThreadsService {
   private readonly threadRepository: Repository<Thread> =
@@ -13,17 +17,17 @@ class ThreadsService {
       const threads = await this.threadRepository.find({
         relations: ["user"],
         order: {
-          id: "DESC"
-        }
+          id: "DESC",
+        },
       });
 
-      let responseBaru = []
+      let responseBaru = [];
 
-      threads.forEach(element => {
+      threads.forEach((element) => {
         responseBaru.push({
           ...element,
           likes_count: Math.floor(Math.random() * 100),
-          replies_cout: Math.floor(Math.random() * 100)
+          replies_cout: Math.floor(Math.random() * 100),
         });
       });
 
@@ -40,32 +44,41 @@ class ThreadsService {
         where: {
           id: id,
         },
-        relations: ["user"]
+        relations: ["user"],
       });
 
       return res.status(200).json(thread);
     } catch (err) {
-      return res.status(500).json("Something wrong in server!")
+      return res.status(500).json("Something wrong in server!");
     }
   }
 
   async create(req: Request, res: Response) {
     try {
-      const data = req.body;
+      const image = res.locals.filename;
 
-      const { error } = createThreadSchema.validate(data)
+      const data = {
+        ...req.body,
+        image,
+      };
+
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        "./src/uploads/" + image,
+      );
+
+      const { error } = createThreadSchema.validate(data);
 
       if (error) {
         return res.status(400).json({
-          error: error
-        })
+          error: error,
+        });
       }
 
       // create object biar typenya sesuai
       const thread = this.threadRepository.create({
         content: data.content,
-        image: data.image,
-        user: data.user
+        image: cloudinaryResponse.secure_url,
+        user: data.user,
       });
 
       // insertion ke database
@@ -73,7 +86,7 @@ class ThreadsService {
 
       return res.status(200).json(thread);
     } catch (err) {
-      return res.status(500).json("Something wrong in server!")
+      return res.status(500).json("Something wrong in server!");
     }
   }
 
@@ -87,19 +100,18 @@ class ThreadsService {
       });
 
       const data = req.body;
-      const { error } = updateThreadSchema.validate(data)
+      const { error } = updateThreadSchema.validate(data);
 
       if (error) {
         return res.status(400).json({
-          error: error
-        })
+          error: error,
+        });
       }
 
       // bikin pengecekan hanya delete threadnya ketika thread dengan id yg sesuai param itu ada
       if (!thread) {
-        return res.status(404).json("Thread ID not found!")
+        return res.status(404).json("Thread ID not found!");
       }
-
 
       if (data.content != "") {
         thread.content = data.content;
@@ -112,7 +124,7 @@ class ThreadsService {
       const createdThread = await this.threadRepository.save(thread);
       return res.status(200).json(thread);
     } catch (err) {
-      return res.status(500).json("Something wrong in server!")
+      return res.status(500).json("Something wrong in server!");
     }
   }
 
@@ -127,7 +139,7 @@ class ThreadsService {
 
       // bikin pengecekan hanya delete threadnya ketika thread dengan id yg sesuai param itu ada
       if (!thread) {
-        return res.status(404).json("Thread ID not found!")
+        return res.status(404).json("Thread ID not found!");
       }
 
       const deletedThread = this.threadRepository.delete({
@@ -136,7 +148,7 @@ class ThreadsService {
 
       return res.status(200).json(thread);
     } catch (err) {
-      return res.status(500).json("Something wrong in server!")
+      return res.status(500).json("Something wrong in server!");
     }
   }
 }
