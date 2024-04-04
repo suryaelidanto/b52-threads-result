@@ -1,52 +1,3 @@
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-// import Home from "./pages/Home";
-// import Main from "./layouts/Main";
-// import Register from "./pages/Register";
-// import Login from "./pages/Login";
-
-// const theme = extendTheme({
-//   styles: {
-//     global: {
-//       body: {
-//         bg: 'darkBackground', // Memanggil warna latar belakang yang sudah Anda tambahkan di konfigurasi
-//       },
-//     },
-//   },
-//   colors: {
-//     darkBackground: '#222', // Ganti ini dengan warna latar belakang gelap yang Anda inginkan
-//   },
-// })
-
-// export default function App() {
-//   return (
-//     <ChakraProvider theme={theme}>
-//       <Router>
-//         <Routes>
-//           <Route path="/home" element={
-//             <Main>
-//               <Home />
-//             </Main>
-//           } />
-
-//           <Route path="/register" element={
-//             <Main>
-//               <Register />
-//             </Main>
-//           } />
-
-//           <Route path="/login" element={
-//             <Main>
-//               <Login />
-//             </Main>
-//           } />
-//         </Routes>
-//       </Router>
-//     </ChakraProvider>
-//   );
-// }
-
-
 import { Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import Main from "./layouts/Main";
 import Home from "./pages/Home";
@@ -58,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { AUTH_CHECK, AUTH_ERROR } from "./stores/RootReducer";
 import { useSelector } from "react-redux";
 import { RootState } from "./stores/type/rootState";
+import { toast } from "react-toastify";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -83,6 +35,14 @@ export default function App() {
       authCheck()
     } else {
       setIsLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    const sse = new EventSource("http://localhost:5000/api/v1/notifications")
+
+    sse.onmessage = () => {
+      toast("Ada notifikasi baru, silahkan refresh browser untuk melihatnya!")
     }
   }, [])
 

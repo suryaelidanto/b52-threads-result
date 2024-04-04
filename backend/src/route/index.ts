@@ -3,16 +3,12 @@ import ThreadsController from "../controllers/ThreadsControllers";
 import AuthControllers from "../controllers/AuthControllers";
 import AuthenticationMiddleware from "../middlewares/Auth";
 import { upload } from "../middlewares/Upload";
-import { v2 as cloudinary } from "cloudinary";
 import "dotenv/config";
+import cloudinary from "../libs/cloudinary";
 
 const router = express.Router();
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+cloudinary.config();
 
 router.use("/uploads", express.static("src/uploads"));
 
